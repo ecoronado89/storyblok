@@ -1,0 +1,17 @@
+{
+  "name": "storyblok",
+  "version": "1.0.0",
+  "description": "Storyblok home task",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "author": "Eder Coronado",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.5.0"
+  },
+  "dependencies": {
+    "cypress-file-upload": "^5.0.8"
+  }
+}
