@@ -16,4 +16,11 @@ describe('Assets', () => {
     cy.get('.assets-list-item__container').should('be.visible')
     cy.get('[data-testid="asset-name"]').should('have.text', fileName)
   })
+
+  it.only('Private file', () => {
+    cy.uploadFile('frodo.jpeg')
+    cy.get('.sb-toggle').click()
+    cy.get('[type=submit]').click()
+    cy.get('.asset-private-preview').should('be.visible')
+  })
 })
