@@ -22,13 +22,18 @@ describe.only("Assets", () => {
   });
 
   after(() => {
-    cy.removeFile(assetId)
-  })
+    cy.removeFile(assetId);
+  });
   it("Replace file", () => {
     cy.intercept("POST", "**/assets").as("replaceFile");
     assets.getFileContainer().click();
     cy.get('[aria-label="Replace asset"]').click();
     cy.replaceFile("saruman.jpeg");
-    cy.wait("@replaceFile").its("response.statusCode").should("eq", 200);
+    cy.wait("@replaceFile")
+      .its("response")
+      .then(response => {
+        cy.wrap(response).its('statusCode').should('eq', 200)
+        cy.wrap(response).its('body.id').should('eq', assetId)
+      })
   });
 });
