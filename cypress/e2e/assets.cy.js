@@ -1,26 +1,32 @@
-describe('Assets', () => {
+import Login from "../pageObjects/login";
+import HomePage from "../pageObjects/homepage";
+import Assets from "../pageObjects/assets";
+
+describe("Assets", () => {
+  const login = new Login();
+  const homePage = new HomePage();
+  const assets = new Assets();
 
   beforeEach(() => {
-    cy.login('coreddin@gmail.com', '@Hangar18001')
-    cy.get('[data-testid="column-space-item"]').click()
-    cy.get('#app-Assets').click()
-  })
+    cy.visit("/");
+    login.signIn("coreddin@gmail.com", "@Hangar18001");
+    homePage.getMySpace().click();
+    homePage.getAssets().click();
+  });
 
-  it('File upload', () => {
-    const dateNow = new Date()
-    let fileName = dateNow.toISOString().toLowerCase()
-    cy.uploadFile('frodo.jpeg')
-    cy.get('#asset-name-input-0').clear()
-    cy.get('#asset-name-input-0').type(fileName)
-    cy.get('[type=submit]').click()
-    cy.get('.assets-list-item__container').should('be.visible')
-    cy.get('[data-testid="asset-name"]').should('have.text', fileName)
-  })
+  it("File upload", () => {
+    let fileName = Math.round(Math.random() * 1000)
+    cy.uploadFile("frodo.jpeg");
+    assets.getNameInput().clear().type(fileName);
+    assets.getUploadBtn().click();
+    assets.getFileContainer().should("be.visible");
+    assets.getFileName().should("have.text", fileName);
+  });
 
-  it.only('Private file', () => {
-    cy.uploadFile('frodo.jpeg')
-    cy.get('.sb-toggle').click()
-    cy.get('[type=submit]').click()
-    cy.get('.asset-private-preview').should('be.visible')
-  })
-})
+  it("Private file", () => {
+    cy.uploadFile("frodo.jpeg");
+    assets.getPrivateBtn().click();
+    assets.getUploadBtn().click();
+    assets.getPrivateFileContainer().should("be.visible");
+  });
+});
