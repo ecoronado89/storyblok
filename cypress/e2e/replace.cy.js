@@ -2,11 +2,11 @@ import Login from "../pageObjects/login";
 import HomePage from "../pageObjects/homepage";
 import Assets from "../pageObjects/assets";
 
-describe("Assets", () => {
+describe("Replace", () => {
   const login = new Login();
   const homePage = new HomePage();
   const assets = new Assets();
-  let assetId;
+  let assetId = []
 
   beforeEach(() => {
     cy.intercept("POST", "**/assets").as("upload");
@@ -17,23 +17,24 @@ describe("Assets", () => {
     cy.uploadFile("frodo.jpeg");
     assets.getUploadBtn().click();
     cy.wait("@upload").then(({ response }) => {
-      assetId = response.body.id;
+      assetId.push(response.body.id);
     });
   });
 
   after(() => {
     cy.removeFile(assetId);
   });
+
   it("Replace file", () => {
     cy.intercept("POST", "**/assets").as("replaceFile");
-    cy.get('[aria-label="Asset actions"]').click({ force: true });
-    cy.contains('[role="menuitemradio"]', "Replace").click({ force: true })
+    assets.getDotMenu().click({ force: true });
+    assets.getDotMenuOption('Replace').click({ force: true })
     cy.replaceFile("saruman.jpeg");
     cy.wait("@replaceFile")
       .its("response")
       .then((response) => {
         cy.wrap(response).its("statusCode").should("eq", 200);
-        cy.wrap(response).its("body.id").should("eq", assetId);
+        cy.wrap(response).its("body.id").should("eq", assetId[0]);
       });
   });
 });

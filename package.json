@@ -4,7 +4,8 @@
   "description": "Storyblok home task",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "author": "Eder Coronado",
   "license": "ISC",

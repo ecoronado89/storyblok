@@ -16,7 +16,7 @@ Cypress.Commands.add('removeFile', (fileId) => {
             Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMjAyMjEsInRpbWVzdGFtcCI6MTcwMDYyODQ0Mn0.-xDXspmzg3miNyu3kQaadlGzRYNi4IEu6vqfrfLjAbw'
         },
         body: {
-            "ids":[fileId]
+            "ids":fileId
         }
     })
 })

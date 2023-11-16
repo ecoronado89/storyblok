@@ -22,5 +22,13 @@ class Assets {
   getPrivateFileContainer() {
     return cy.get(".asset-private-preview");
   }
+
+  getDotMenu() {
+    return cy.get('[aria-label="Asset actions"]');
+  }
+
+  getDotMenuOption(option) {
+    return cy.contains('[role="menuitemradio"]', option)
+  }
 }
 export default Assets;
