@@ -11,7 +11,7 @@ describe("Replace", () => {
   beforeEach(() => {
     cy.intercept("POST", "**/assets").as("upload");
     cy.visit("/");
-    login.signIn("coreddin@gmail.com", "@Hangar18001");
+    login.signIn(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
     homePage.getMySpace().click();
     homePage.getAssets().click();
     cy.uploadFile("frodo.jpeg");

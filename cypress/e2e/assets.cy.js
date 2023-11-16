@@ -11,17 +11,17 @@ describe("Assets", () => {
   beforeEach(() => {
     cy.intercept("POST", "**/assets").as("public");
     cy.visit("/");
-    login.signIn("coreddin@gmail.com", "@Hangar18001");
+    login.signIn(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
     homePage.getMySpace().click();
     homePage.getAssets().click();
   });
 
-  after(() => {
-    cy.removeFile(assetId);
-  });
+  // after(() => {
+  //   cy.removeFile(assetId);
+  // });
 
   it("File upload", () => {
-    let fileName = Math.round(Math.random() * 1000)
+    let fileName = Math.round(Math.random() * 1000);
     cy.uploadFile("frodo.jpeg");
     assets.getNameInput().clear().type(fileName);
     assets.getUploadBtn().click();
@@ -41,5 +41,25 @@ describe("Assets", () => {
       assetId.push(response.body.id);
     });
     assets.getPrivateFileContainer().should("be.visible");
+  });
+
+  it("Asset name should be mandatory", () => {
+    cy.uploadFile("frodo.jpeg");
+    assets.getNameInput().clear();
+    assets.getUploadBtn().should("have.attr", "disabled");
+  });
+
+  it("Advanced options", () => {});
+
+  it.only("Past expiration date", () => {
+    cy.uploadFile("frodo.jpeg");
+    assets.getAdvancedOptions().click({ force: true });
+    assets.getFormPrivateBtn().click({ force: true });
+    assets.getPublishPrivateAssetInput().type("2020-11-17 23:59");
+    assets.getUploadBtn().click();
+    assets.getNotificationError().should("be.visible");
+    assets
+      .getNotificationErrorMsg()
+      .should("have.text", "Please select a future date");
   });
 });

@@ -7,6 +7,30 @@ class Assets {
     return cy.get("[type=submit]");
   }
 
+  getVisibilityAsset() {
+    return cy.get('.assets-upload-item__edit')
+  }
+
+  getAdvancedOptions() {
+    return cy.get(".assets-upload-item__more-options-button");
+  }
+
+  getPublishPrivateAssetInput() {
+    return cy.get('[placeholder="Select date"]');
+  }
+
+  getFormPrivateBtn() {
+    return cy.get("#asset-form-overview-private-asset");
+  }
+
+  getNotificationError() {
+    return cy.get(".error");
+  }
+
+  getNotificationErrorMsg() {
+    return cy.get('.custom-notification__text')
+  }
+
   getFileContainer() {
     return cy.get(".assets-list-item__container");
   }
@@ -28,7 +52,7 @@ class Assets {
   }
 
   getDotMenuOption(option) {
-    return cy.contains('[role="menuitemradio"]', option)
+    return cy.contains('[role="menuitemradio"]', option);
   }
 }
 export default Assets;
