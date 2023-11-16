@@ -3,16 +3,16 @@
 ## Home assignment
 
 ## Installing
-
+Please use `npm install` to install all dependencies needed to successfully execute tests
 ## Test structure
 
-#### e2e
+### e2e
 Contains test files
 
-#### fixtures
+### fixtures
 You can find files used in upload and replace functionalities
 
-#### pageObjects
+### pageObjects
 This folder contains the page objects used in the tests
 
 ## Running tests
