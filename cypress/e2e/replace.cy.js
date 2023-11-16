@@ -2,7 +2,7 @@ import Login from "../pageObjects/login";
 import HomePage from "../pageObjects/homepage";
 import Assets from "../pageObjects/assets";
 
-describe.only("Assets", () => {
+describe("Assets", () => {
   const login = new Login();
   const homePage = new HomePage();
   const assets = new Assets();
@@ -26,14 +26,14 @@ describe.only("Assets", () => {
   });
   it("Replace file", () => {
     cy.intercept("POST", "**/assets").as("replaceFile");
-    assets.getFileContainer().click();
-    cy.get('[aria-label="Replace asset"]').click();
+    cy.get('[aria-label="Asset actions"]').click({ force: true });
+    cy.contains('[role="menuitemradio"]', "Replace").click({ force: true })
     cy.replaceFile("saruman.jpeg");
     cy.wait("@replaceFile")
       .its("response")
-      .then(response => {
-        cy.wrap(response).its('statusCode').should('eq', 200)
-        cy.wrap(response).its('body.id').should('eq', assetId)
-      })
+      .then((response) => {
+        cy.wrap(response).its("statusCode").should("eq", 200);
+        cy.wrap(response).its("body.id").should("eq", assetId);
+      });
   });
 });

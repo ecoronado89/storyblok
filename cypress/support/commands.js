@@ -13,7 +13,7 @@ Cypress.Commands.add('removeFile', (fileId) => {
         method: 'POST',
         url: 'https://app.storyblok.com/v1/spaces/262308/assets/bulk_destroy',
         headers: {
-            Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMjAyMjEsInRpbWVzdGFtcCI6MTcwMDY5MDU5NX0.rwfLM7vovhdG5htw8tvDpulzS-weeLTwzecxkKo1dAU'
+            Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMjAyMjEsInRpbWVzdGFtcCI6MTcwMDYyODQ0Mn0.-xDXspmzg3miNyu3kQaadlGzRYNi4IEu6vqfrfLjAbw'
         },
         body: {
             "ids":[fileId]
