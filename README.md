@@ -2,20 +2,29 @@
 
 ## Home assignment
 
-## Installing
-Please use `npm install` to install all dependencies needed to successfully execute tests
+This repo contains tests for the Storyblok home assignment to exercise Assets and Replace functionality
+
+## Installation
+You need to have Node.js installed before using Cypress.
+For rest of the installations move to project folder in command prompt and type `npm install` which will install all dependencies needed to successfully execute tests
+
 ## Test structure
 
-### e2e
-Contains test files
-
-### fixtures
-You can find files used in upload and replace functionalities
-
-### pageObjects
-This folder contains the page objects used in the tests
+Page Object model is used to increase readability and make code easier to manage
 
 ## Running tests
-Make sure you are in the root of the project, then execute one of these 2 commands
-`npm run cypress:open` to execute tests in UI mode
-`npm run cypress:run` to execute tests in headless mode
+To run tests in interactive mode use:
+`npm run cypress:open`
+
+To run tests in headless mode use:
+`npm run cypress:run`
+
+### Environment variables
+The following Environment Vars should be set before running the tests
+
+- `USER_EMAIL`
+- `USER_PASSWORD`
+- `API_TOKEN`
+- `SPACE_ID`
+
+Create a `cypress.env.json` in the root of the project and add the corresponding information

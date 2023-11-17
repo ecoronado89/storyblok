@@ -8,7 +8,7 @@ class Assets {
   }
 
   getVisibilityAsset() {
-    return cy.get('.assets-upload-item__edit')
+    return cy.get(".assets-upload-item__edit");
   }
 
   getAdvancedOptions() {
@@ -28,7 +28,7 @@ class Assets {
   }
 
   getNotificationErrorMsg() {
-    return cy.get('.custom-notification__text')
+    return cy.get(".custom-notification__text");
   }
 
   getFileContainer() {
@@ -53,6 +53,10 @@ class Assets {
 
   getDotMenuOption(option) {
     return cy.contains('[role="menuitemradio"]', option);
+  }
+
+  getAssetPreview() {
+    return cy.get(".asset-detail-preview__visibility");
   }
 }
 export default Assets;

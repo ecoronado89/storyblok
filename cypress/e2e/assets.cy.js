@@ -9,20 +9,20 @@ describe("Assets", () => {
   let assetId = [];
 
   beforeEach(() => {
-    cy.intercept("POST", "**/assets").as("public");
     cy.visit("/");
     login.signIn(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
     homePage.getMySpace().click();
     homePage.getAssets().click();
   });
 
-  // after(() => {
-  //   cy.removeFile(assetId);
-  // });
+  afterEach(() => {
+    cy.removeFile(assetId);
+  });
 
-  it("File upload", () => {
+  it("Asset upload", () => {
     let fileName = Math.round(Math.random() * 1000);
-    cy.uploadFile("frodo.jpeg");
+    cy.intercept("POST", "**/assets").as("public");
+    cy.uploadFile("adobe-reader.png");
     assets.getNameInput().clear().type(fileName);
     assets.getUploadBtn().click();
     cy.wait("@public").then(({ response }) => {
@@ -32,9 +32,9 @@ describe("Assets", () => {
     assets.getFileName().should("have.text", fileName);
   });
 
-  it("Private file", () => {
+  it("Private asset", () => {
     cy.intercept("POST", "**/assets").as("private");
-    cy.uploadFile("frodo.jpeg");
+    cy.uploadFile("gmail.png");
     assets.getPrivateBtn().click();
     assets.getUploadBtn().click();
     cy.wait("@private").then(({ response }) => {
@@ -43,23 +43,38 @@ describe("Assets", () => {
     assets.getPrivateFileContainer().should("be.visible");
   });
 
-  it("Asset name should be mandatory", () => {
-    cy.uploadFile("frodo.jpeg");
-    assets.getNameInput().clear();
-    assets.getUploadBtn().should("have.attr", "disabled");
-  });
-
-  it("Advanced options", () => {});
-
-  it.only("Past expiration date", () => {
-    cy.uploadFile("frodo.jpeg");
-    assets.getAdvancedOptions().click({ force: true });
-    assets.getFormPrivateBtn().click({ force: true });
-    assets.getPublishPrivateAssetInput().type("2020-11-17 23:59");
+  it("View details - Private asset", () => {
+    cy.intercept("POST", "**/assets").as("preview");
+    cy.uploadFile("adminer.svg");
+    assets.getPrivateBtn().click();
     assets.getUploadBtn().click();
-    assets.getNotificationError().should("be.visible");
+    cy.wait("@preview").then(({ response }) => {
+      assetId.push(response.body.id);
+    });
+    assets.getDotMenuOption("View Details").click({ force: true });
     assets
-      .getNotificationErrorMsg()
-      .should("have.text", "Please select a future date");
+      .getAssetPreview()
+      .should(
+        "have.text",
+        "Private AssetNot available to the public and can only be accessed via an access token."
+      );
   });
+
+  // it("Asset name should be mandatory", () => {
+  //   cy.uploadFile("adobe-reader.png");
+  //   assets.getNameInput().clear();
+  //   assets.getUploadBtn().should("have.attr", "disabled");
+  // });
+
+  // it("Past expiration date", () => {
+  //   cy.uploadFile("adobe-reader.png");
+  //   assets.getAdvancedOptions().click({ force: true });
+  //   assets.getFormPrivateBtn().click({ force: true });
+  //   assets.getPublishPrivateAssetInput().type("2020-11-17 23:59");
+  //   assets.getUploadBtn().click();
+  //   assets.getNotificationError().should("be.visible");
+  //   assets
+  //     .getNotificationErrorMsg()
+  //     .should("have.text", "Please select a future date");
+  // });
 });

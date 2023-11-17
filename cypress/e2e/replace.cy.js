@@ -14,7 +14,7 @@ describe("Replace", () => {
     login.signIn(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
     homePage.getMySpace().click();
     homePage.getAssets().click();
-    cy.uploadFile("frodo.jpeg");
+    cy.uploadFile("apple-logo.png");
     assets.getUploadBtn().click();
     cy.wait("@upload").then(({ response }) => {
       assetId.push(response.body.id);
@@ -29,7 +29,7 @@ describe("Replace", () => {
     cy.intercept("POST", "**/assets").as("replaceFile");
     assets.getDotMenu().click({ force: true });
     assets.getDotMenuOption('Replace').click({ force: true })
-    cy.replaceFile("saruman.jpeg");
+    cy.replaceFile("adobe-reader.png");
     cy.wait("@replaceFile")
       .its("response")
       .then((response) => {
