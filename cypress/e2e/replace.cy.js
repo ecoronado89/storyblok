@@ -25,7 +25,7 @@ describe("Replace", () => {
     cy.removeFile(assetId);
   });
 
-  it("Replace file", () => {
+  it("Should replace asset", () => {
     cy.intercept("POST", "**/assets").as("replaceFile");
     assets.getDotMenu().click({ force: true });
     assets.getDotMenuOption('Replace').click({ force: true })

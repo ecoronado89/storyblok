@@ -19,7 +19,7 @@ describe("Assets", () => {
     cy.removeFile(assetId);
   });
 
-  it("Asset upload", () => {
+  it("Should upload public asset", () => {
     let fileName = Math.round(Math.random() * 1000);
     cy.intercept("POST", "**/assets").as("public");
     cy.uploadFile("adobe-reader.png");
@@ -32,7 +32,7 @@ describe("Assets", () => {
     assets.getFileName().should("have.text", fileName);
   });
 
-  it("Private asset", () => {
+  it("Should upload private asset", () => {
     cy.intercept("POST", "**/assets").as("private");
     cy.uploadFile("gmail.png");
     assets.getPrivateBtn().click();
@@ -43,7 +43,7 @@ describe("Assets", () => {
     assets.getPrivateFileContainer().should("be.visible");
   });
 
-  it("View details - Private asset", () => {
+  it("Should display private preview", () => {
     cy.intercept("POST", "**/assets").as("preview");
     cy.uploadFile("adminer.svg");
     assets.getPrivateBtn().click();
@@ -59,22 +59,4 @@ describe("Assets", () => {
         "Private AssetNot available to the public and can only be accessed via an access token."
       );
   });
-
-  // it("Asset name should be mandatory", () => {
-  //   cy.uploadFile("adobe-reader.png");
-  //   assets.getNameInput().clear();
-  //   assets.getUploadBtn().should("have.attr", "disabled");
-  // });
-
-  // it("Past expiration date", () => {
-  //   cy.uploadFile("adobe-reader.png");
-  //   assets.getAdvancedOptions().click({ force: true });
-  //   assets.getFormPrivateBtn().click({ force: true });
-  //   assets.getPublishPrivateAssetInput().type("2020-11-17 23:59");
-  //   assets.getUploadBtn().click();
-  //   assets.getNotificationError().should("be.visible");
-  //   assets
-  //     .getNotificationErrorMsg()
-  //     .should("have.text", "Please select a future date");
-  // });
 });

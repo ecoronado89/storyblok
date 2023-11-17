@@ -7,6 +7,10 @@ class Assets {
     return cy.get("[type=submit]");
   }
 
+  getSaveBtn() {
+    return cy.get(".asset-detail__footer-actions > button");
+  }
+
   getVisibilityAsset() {
     return cy.get(".assets-upload-item__edit");
   }
@@ -17,6 +21,10 @@ class Assets {
 
   getPublishPrivateAssetInput() {
     return cy.get('[placeholder="Select date"]');
+  }
+
+  getExpirationDateInput() {
+    return cy.get('[placeholder="Expiration date"]');
   }
 
   getFormPrivateBtn() {
